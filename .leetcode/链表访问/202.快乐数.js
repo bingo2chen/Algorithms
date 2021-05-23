@@ -58,26 +58,22 @@
 
 // @lc code=start
 /**
+ * 快慢指针
  * @param {number} n
  * @return {boolean}
  */
 var isHappy = function(n) {
-    let pre = n, cur = getNext(n);
-    while (pre !== cur && cur !== 1) {
-        pre = getNext(pre);
-        cur = getNext(getNext(cur));
+    let slow = n, fast = getNext(n)
+    while (fast !== 1 && slow !== fast) {
+        slow = getNext(slow)
+        fast = getNext(getNext(fast))
     }
-    return cur === 1;
+    return fast === 1
 };
 
-var getNext = function(n) {
-    let sun = 0;
-    while (n) {
-        sun += (n % 10) * (n % 10);
-        n = Math.floor(n / 10)
-    }
-    return sun;
-}
 
+var getNext = function(n) {
+    return n.toString().split('').map(i => i ** 2).reduce((a, b) => a + b)
+}
 // @lc code=end
 
