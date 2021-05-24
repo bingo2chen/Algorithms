@@ -33,23 +33,37 @@
  *     this.next = (next===undefined ? null : next)
  * }
  */
+
 /**
+ * 递归
  * @param {ListNode} head
  * @return {ListNode}
  */
 var reverseList = function(head) {
-    if (!head) {
-        return null
-    }
-    let pre = null, cur = head;
-    while (cur) {
-        [cur.next, pre, cur] = [pre, cur, cur.next]
-        // let next = cur.next;
-        // cur.next = pre;
-        // pre = cur;
-        // cur = next;
-    }
-    return pre;
+    // 存在最小子问题 递归终止条件
+    if (head == null || head.next == null) return head
+    // 记录反转后的子链表 递
+    let ret = reverseList(head.next)
+    // 实现反转 归 
+    head.next.next = head
+    head.next = null
+    return ret
+};
+
+/**
+ * 迭代
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+   let pre = null, cur = head
+   while (cur) {
+        const next = cur.next
+        cur.next = pre
+        pre = cur
+        cur = next
+   }
+   return pre
 };
 // @lc code=end
 

@@ -83,31 +83,46 @@
  * @param {number} k
  * @return {ListNode}
  */
-var reverseKGroup = function(head, k) {
-    if (!head) return null;
-    let ret = new ListNode(-1, head), pre = ret;
-    do {
-        pre.next = reverse(pre.next, k)
-        for (let i = 0; i < k && pre; i++) {
-            pre = pre.next
-        }
-        if (!pre) break;
-    } while (1)
-    return ret.next
-};
 
-var reverse = function(head, n) {
-    let pre = head, cur = head, con = n
-    while (--n && pre) {
-        pre = pre.next
+ var myReverse = function(head, tail) {
+    //  前一个节点 指向尾节点的下一个节点
+    let prev = tail.next
+    let curr = head
+    while (prev !== tail) {
+        const next = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next
     }
-    if (!pre) return head
-    pre = null
-    while (con--) {
-        [cur.next, pre, cur] = [pre, cur, cur.next]
-    }
-    head.next = cur
-    return pre
+    return [tail, head]
 }
+var reverseKGroup = function(head, k) {
+    const hair = new ListNode(-1)
+    hair.next = head
+    let pre = hair
+    while (head) {
+        let tail = pre
+        for (let i = 0; i < k; ++i) {
+            // 计算尾节点位置
+            tail = tail.next;
+
+            // 末尾不足k
+            if (!tail) {
+                return hair.next;
+            }
+        }
+        const nex = tail.next;
+
+        // 反转子链表
+        [head, tail] = myReverse(head, tail)
+
+        // 子链表重新接回原链表
+        pre.next = head
+        tail.next = nex
+        pre = tail
+        head = tail.next
+    }
+    return hair.next
+};
 // @lc code=end
 
