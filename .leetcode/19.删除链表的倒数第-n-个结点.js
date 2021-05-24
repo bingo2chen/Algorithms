@@ -76,7 +76,7 @@ var removeNthFromEnd = function(head, n) {
     while(fast && fast.next) { // 快慢指针一起走
         fast = fast.next
         slow = slow.next
-    }
+    } 
     slow.next = slow.next.next
     return dummyHead.next
 };
