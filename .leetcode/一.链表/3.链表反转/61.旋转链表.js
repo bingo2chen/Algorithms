@@ -57,19 +57,23 @@
  * @return {ListNode}
  */
 var rotateRight = function(head, k) {
-    if (!head || !head.next || !k ) return head
+    if (!head || !head.next || !k) return head
     let cur = head, len = 1
+    // 算出链表长度len
     while (cur.next) {
         cur = cur.next
         len++
     }
-    cur.next = head
+    // 从 move 位置截断
     let move = len - k % len
+    // 形成闭环
+    cur.next = head
     while (move) {
         cur = cur.next
         move--
     }
     let ret = cur.next
+    // 截断
     cur.next = null
     return ret
 };

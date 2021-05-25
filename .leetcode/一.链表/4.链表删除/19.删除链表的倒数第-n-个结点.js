@@ -61,19 +61,44 @@
  *     this.next = (next===undefined ? null : next)
  * }
  */
+
 /**
+ * 计算链表长度
  * @param {ListNode} head
  * @param {number} n
  * @return {ListNode}
  */
 var removeNthFromEnd = function(head, n) {
-    const dummyHead = new ListNode(0)
+    const dummyHead = new ListNode(-1)
     dummyHead.next = head
-    let fast = dummyHead, slow = dummyHead
-    while(n--) { // 快指针先走 n
-        fast = fast.next
+    let pre = dummyHead, cur = head, con = 0
+    // 计算链表长度
+    while (cur.next) {
+        cur = cur.next
+        con++
     }
-    while(fast && fast.next) { // 快慢指针一起走
+    for (let i = 0; i < con - n + 1; i++) {
+        pre = pre.next
+    }
+    pre.next = pre.next.next
+    return dummyHead.next
+};
+
+/**
+ * 快慢指针
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+    const dummyHead = new ListNode(-1)
+    dummyHead.next = head
+    let slow = dummyHead, fast = dummyHead
+    while (n) {
+        fast = fast.next
+        n--
+    }
+    while (fast && fast.next) {
         fast = fast.next
         slow = slow.next
     }
